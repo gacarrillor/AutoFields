@@ -267,34 +267,25 @@ class EventManager( QObject ):
         
         field = layer.fields()[fieldIndex]
         res = field.convertCompatible( result )
+        # If result is None, res will be None, but even in that case, QGIS knows
+        #   what to do with it while saving, it seems it's treated as NULL.
         
-        if res is None: 
-            self.msg.show( 
-                QApplication.translate( "EventManager", "[Error] Updating AutoField " ) + \
-                dictProperties['field'] + \
-                QApplication.translate( "EventManager", " in layer " ) + layer.name() + \
-                QApplication.translate( "EventManager", " to value " ) + str(res) + \
-                QApplication.translate( "EventManager", " was NOT possible. Field type (" ) + \
-                QVariant.typeToName(field.type()) + \
-                QApplication.translate( "EventManager", ") and value type (" ) + \
-                str(type(res)) + QApplication.translate( "EventManager", ") are incompatible." ), 
-                'warning' )
-        else:               
-            # TODO when bug #15311 is fixed, this block should work better
-            #if dictProperties['expression'] in self.listProviderExpressions: 
-            #    # Save directly to provider
-            #    layer.dataProvider().changeAttributeValues( { featureId : { fieldIndex : res } } )
-            #else: # Save to layer
-            #    layer.changeAttributeValue( featureId, fieldIndex, res )
-             
-            # Workaround 
-            if event == 'featureAdded': # Save directly to the provider
-                layer.dataProvider().changeAttributeValues( { featureId : { fieldIndex : res } } )
-            else: # Save to layer
-                layer.changeAttributeValue( featureId, fieldIndex, res )
-            
-            self.msg.show( "[Info] * AutoField's value updated to " + str(res) + \
-                ", (" + layer.name() + "." + dictProperties['field'] + ") by " + event +".", 'info', True )
+
+        # TODO when bug #15311 is fixed, this block should work better
+        #if dictProperties['expression'] in self.listProviderExpressions: 
+        #    # Save directly to provider
+        #    layer.dataProvider().changeAttributeValues( { featureId : { fieldIndex : res } } )
+        #else: # Save to layer
+        #    layer.changeAttributeValue( featureId, fieldIndex, res )
+         
+        # Workaround 
+        if event == 'featureAdded': # Save directly to the provider
+            layer.dataProvider().changeAttributeValues( { featureId : { fieldIndex : res } } )
+        else: # Save to layer
+            layer.changeAttributeValue( featureId, fieldIndex, res )
+        
+        self.msg.show( "[Info] * AutoField's value updated to " + str(res) + \
+            ", (" + layer.name() + "." + dictProperties['field'] + ") by " + event +".", 'info', True )
         
         
     def spatialUpdate( self ):

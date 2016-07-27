@@ -322,7 +322,7 @@ Marcela Suárez&lt;br/&gt;
     </message>
     <message>
         <source>Only show enabled AutoFields</source>
-        <translation type="finished">Solo mostrar AutoFields habilitados</translation>
+        <translation>Solo mostrar AutoFields habilitados</translation>
     </message>
 </context>
 <context>
@@ -423,22 +423,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>[Error] </source>
         <translation>[Error] </translation>
-    </message>
-    <message>
-        <source> to value </source>
-        <translation> al valor </translation>
-    </message>
-    <message>
-        <source> was NOT possible. Field type (</source>
-        <translation> . Tipo de campo (</translation>
-    </message>
-    <message>
-        <source>) and value type (</source>
-        <translation>) y tipo de valor (</translation>
-    </message>
-    <message>
-        <source>) are incompatible.</source>
-        <translation>) son incompatibles.</translation>
     </message>
     <message>
         <source> in layer </source>
