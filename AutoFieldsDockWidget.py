@@ -100,7 +100,7 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         self.autoFieldManager.autoFieldEnabled.connect( self.populateAutoFieldsTable )
         self.autoFieldManager.autoFieldDisabled.connect( self.populateAutoFieldsTable )
         self.tblAutoFields.itemSelectionChanged.connect( self.updateRemoveAutoFieldButton )
-        self.chkOnlyEnabledAutoFields.toggled.connect( self.saveShowOnluEnabledPreference )
+        self.chkOnlyEnabledAutoFields.toggled.connect( self.saveShowOnlyEnabledPreference )
         self.btnRemoveAutoFields.clicked.connect( self.removeAutoFieldFromTable )
         
 
@@ -576,7 +576,7 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
                 self.autoFieldManager.removeAutoField( autoFieldId )
     
     
-    def saveShowOnluEnabledPreference( self, status ):
+    def saveShowOnlyEnabledPreference( self, status ):
         """ Saves the preference in QSettings and updates list of AutoFields """
         settings = QSettings()
         settings.setValue( self.autoFieldManager.settingsPrefix + "/showOnlyEnabledAutoFields" , status )
@@ -600,5 +600,5 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         self.autoFieldManager.autoFieldEnabled.disconnect( self.populateAutoFieldsTable )
         self.autoFieldManager.autoFieldDisabled.disconnect( self.populateAutoFieldsTable )
         self.tblAutoFields.itemSelectionChanged.disconnect( self.updateRemoveAutoFieldButton )
-        self.chkOnlyEnabledAutoFields.toggled.disconnect( self.saveShowOnluEnabledPreference )
+        self.chkOnlyEnabledAutoFields.toggled.disconnect( self.saveShowOnlyEnabledPreference )
         self.btnRemoveAutoFields.clicked.disconnect( self.removeAutoFieldFromTable )
