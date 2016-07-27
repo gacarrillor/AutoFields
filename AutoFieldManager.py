@@ -257,20 +257,6 @@ class AutoFieldManager( QObject ):
         autoFieldId = self.buildAutoFieldId( layer, fieldName )
         return autoFieldId in self.dictAutoFields
 
-        # Check if this AutoField already exists
-        #self.settings.beginGroup( self.settingsPrefix + "/data" )
-        #settingsChildGroups = self.settings.childGroups()
-        #self.settings.endGroup()
-        #if autoFieldId in settingsChildGroups:
-
-        #def isFieldAutoField( self, layer, fieldName ):
-        #    """ Hack to avoid a QGIS bug on eventManager.expressionBasedUpdate() """
-        #    for autoFieldId in self.dictAutoFields:
-        #        if self.dictAutoFields[autoFieldId]['layer'] == layer.publicSource():
-        #            if self.dictAutoFields[autoFieldId]['field'] == fieldName:
-        #                return True
-        #    return False
-
                  
     def getFieldExpression( self, layer, fieldName ):
         """ If the given field is an AutoField, it returns its expression """

@@ -23,7 +23,7 @@ email                : gcarrillo@linuxmail.org
 from qgis.core import ( QgsMapLayerRegistry, QgsProject, QgsMapLayer, QgsField, 
     QgsVectorDataProvider, QgsExpressionContext, QgsExpressionContextUtils, 
     QgsDistanceArea, GEO_NONE )
-from PyQt4.QtCore import Qt, QSize, pyqtSlot, QVariant
+from PyQt4.QtCore import Qt, QSize, pyqtSlot, QVariant, QSettings
 from PyQt4.QtGui import ( QApplication, QIcon, QDockWidget, QTableWidgetItem,  
     QButtonGroup, QBrush, QHeaderView, QMessageBox )
 import resources_rc
@@ -87,6 +87,11 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         self.expressionDlg = None
         
         # 'List of AutoFields' Tab
+        settings = QSettings()
+        check = settings.value( 
+            self.autoFieldManager.settingsPrefix + "/showOnlyEnabledAutoFields",
+            True, type=bool )
+        self.chkOnlyEnabledAutoFields.setChecked( check )
         self.btnRemoveAutoFields.setEnabled( False )
         self.tblAutoFields.sortItems(0, Qt.AscendingOrder)
         self.populateAutoFieldsTable()
@@ -95,6 +100,7 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         self.autoFieldManager.autoFieldEnabled.connect( self.populateAutoFieldsTable )
         self.autoFieldManager.autoFieldDisabled.connect( self.populateAutoFieldsTable )
         self.tblAutoFields.itemSelectionChanged.connect( self.updateRemoveAutoFieldButton )
+        self.chkOnlyEnabledAutoFields.toggled.connect( self.saveShowOnluEnabledPreference )
         self.btnRemoveAutoFields.clicked.connect( self.removeAutoFieldFromTable )
         
 
@@ -509,6 +515,9 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
 
     def addAutoFieldToAutoFieldsTable( self, autoFieldId, autoField, freezeSorting=True ):
         """ Add a whole row to the AutoFields table """
+        if self.chkOnlyEnabledAutoFields.isChecked() and not autoField['enabled']: 
+            return
+            
         if freezeSorting:
             self.tblAutoFields.setSortingEnabled( False )
     
@@ -567,6 +576,13 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
                 self.autoFieldManager.removeAutoField( autoFieldId )
     
     
+    def saveShowOnluEnabledPreference( self, status ):
+        """ Saves the preference in QSettings and updates list of AutoFields """
+        settings = QSettings()
+        settings.setValue( self.autoFieldManager.settingsPrefix + "/showOnlyEnabledAutoFields" , status )
+        self.populateAutoFieldsTable()
+    
+    
     def disconnectAll( self ):
         """ Terminates all SIGNAL/SLOT connections created by this class """
         QgsMapLayerRegistry.instance().legendLayersAdded.disconnect( self.populateLayersTable )
@@ -584,4 +600,5 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         self.autoFieldManager.autoFieldEnabled.disconnect( self.populateAutoFieldsTable )
         self.autoFieldManager.autoFieldDisabled.disconnect( self.populateAutoFieldsTable )
         self.tblAutoFields.itemSelectionChanged.disconnect( self.updateRemoveAutoFieldButton )
+        self.chkOnlyEnabledAutoFields.toggled.disconnect( self.saveShowOnluEnabledPreference )
         self.btnRemoveAutoFields.clicked.disconnect( self.removeAutoFieldFromTable )

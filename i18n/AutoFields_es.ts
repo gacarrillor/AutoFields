@@ -320,6 +320,10 @@ Marcela Suárez&lt;br/&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Only show enabled AutoFields</source>
+        <translation type="finished">Solo mostrar AutoFields habilitados</translation>
+    </message>
 </context>
 <context>
     <name>AutoFieldsDockWidgetPy</name>
@@ -442,11 +446,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>When adding NEW features, you&apos;ll only see AutoField updates AFTER you SAVE your edits.</source>
-        <translation type="finished">Cuando se crean NUEVOS registros, solamente verás actualizaciones de AutoFields cuando GUARDES la edición.</translation>
+        <translation>Cuando se crean NUEVOS registros, solamente verás actualizaciones de AutoFields cuando GUARDES la edición.</translation>
     </message>
     <message>
         <source>Don&apos;t show this anymore</source>
-        <translation type="finished">No mostrar más el mensaje</translation>
+        <translation>No mostrar más el mensaje</translation>
     </message>
 </context>
 <context>
