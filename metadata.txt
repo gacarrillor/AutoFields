@@ -1,0 +1,49 @@
+[general]
+name=AutoFields
+description=Automatic vector field updates when modifying or creating features
+version=0.2.5
+qgisMinimumVersion=2.0
+category=Vector
+author=Germán Carrillo (GeoTux)
+email=gcarrillo@linuxmail.org
+changelog=
+  [0.2.5] (20160726) 
+   - Added support for translations. Added Spanish translation.
+   - Added support for getting area and distance units in calculations from
+     QGIS preferences (QGIS v.>=2.14).
+   - Expression Dialog: Added support for QGIS variables and recent expressions.
+   - The plugin now deals with Adding/Removing fields in an edit session.
+   - Message with button to let users know they should save edits for 
+     calculating AutoFields when adding new features.     
+  [0.2.4] (20160722) 
+   - Opening Custom Expression window for a field that is already an AutoField
+      brings the stored expression making it possible to modify it.
+   - Fix for problem on Windows regarding different path separators in public
+      sources when opening the same layer from 'Add Layer' and QGIS browser.
+  [0.2.3] (20160720) 
+   - Overwriting an AutoField is now possible.
+   - Fixed issue with QGIS locale and provider capabilities (Thanks Thomas B.)
+   - Fixed issue with removing multiple layers from QGIS ToC.
+  [0.2.2] (20160718) 
+   - Workaround for QGIS crash due to bug #15311. Instead of featureAdded, use 
+     committedFeatureAdded SIGNAL for all expressions.
+  [0.2.1] (20160717) 
+   - Fix for expressions that work when new features are saved to provider 
+     (e.g., $id).
+   - Fix for convertCompatible, as the Python API returns QVariant, not bool as 
+     C++.  
+  [0.2] (20160714) 
+   - Ready for testing.
+  [0.1] (20160707) 
+   - First working GUI version
+  [0] (20160522) It all started...
+tags=area, auto, automatic, attribute, calculation, column, coordinates, 
+  expression, feature, field, fill, geometry, layer, populate, property, 
+  refresh, shapefile, trigger, update, vector
+about=This plugin allows you to configure vector fields to be automatically calculated for you when digitizing new features or modifying existing ones. Think about it as triggers in a database or as an automatic Field Calculator.
+homepage=http://geotux.tuxfamily.org
+tracker=https://github.com/gacarrillor/AutoFields/issues
+repository=https://github.com/gacarrillor/AutoFields
+icon=icon.png
+experimental=False
+deprecated=False
