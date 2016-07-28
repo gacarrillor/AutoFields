@@ -421,10 +421,6 @@ Do you want to overwrite it?</source>
         <translation> ¿Quizas lo acabas de remover pero aún no guardaste cambios?</translation>
     </message>
     <message>
-        <source>[Error] </source>
-        <translation>[Error] </translation>
-    </message>
-    <message>
         <source> in layer </source>
         <translation> en la capa </translation>
     </message>
@@ -435,6 +431,14 @@ Do you want to overwrite it?</source>
     <message>
         <source>Don&apos;t show this anymore</source>
         <translation>No mostrar más el mensaje</translation>
+    </message>
+    <message>
+        <source>[Error] (Parsing) </source>
+        <translation>[Error] (Parseando) </translation>
+    </message>
+    <message>
+        <source>[Error] (Evaluating) </source>
+        <translation>[Error] (Evaluando) </translation>
     </message>
 </context>
 <context>

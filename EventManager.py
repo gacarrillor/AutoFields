@@ -22,7 +22,7 @@ email                : gcarrillo@linuxmail.org
 
 from qgis.core import ( QgsMapLayerRegistry, QgsFeatureRequest, QgsVectorLayer, 
     QgsExpression, QgsExpressionContext, QgsVectorDataProvider, QgsDistanceArea,
-    QgsProject, GEO_NONE, QGis, QgsExpressionContextUtils )
+    QgsProject, GEO_NONE, QGis, QgsExpressionContextUtils, NULL )
 from PyQt4.QtCore import QObject, QSettings, pyqtSignal, QVariant
 from PyQt4.QtGui import QApplication
 
@@ -189,7 +189,7 @@ class EventManager( QObject ):
         # Check if AutoField is there, otherwise return
         fieldIndex = layer.fieldNameIndex( dictProperties['field'] )
         if fieldIndex == -1:
-            self.msg.show( 
+            self.msg.show(
                 QApplication.translate( "EventManager", "[Error] Updating AutoField " ) + \
                 dictProperties['field'] + \
                 QApplication.translate( "EventManager", " in layer " ) + \
@@ -199,6 +199,13 @@ class EventManager( QObject ):
             return
 
         event = ""
+        result = None
+
+        expression = QgsExpression( dictProperties['expression'] )
+        if expression.hasParserError():
+            self.msg.show( QApplication.translate( "EventManager", "[Error] (Parsing) " ) + \
+                expression.parserErrorString(), 'critical' )
+            result = NULL
 
         # Avoid infinite recursion (changing the same attribute value infinitely).
         if not index is None: # Filters out the featureAdded SIGNAL       
@@ -232,38 +239,34 @@ class EventManager( QObject ):
             event = "featureAdded"
             
         feature = layer.getFeatures( QgsFeatureRequest( featureId ) ).next()
-        context = QgsExpressionContext()
-        context.appendScope( QgsExpressionContextUtils.globalScope() )
-        context.appendScope( QgsExpressionContextUtils.projectScope() )
-        context.appendScope( QgsExpressionContextUtils.layerScope( layer ) )
-        context.setFields( feature.fields() )
-        context.setFeature( feature )
-
-        expression = QgsExpression( dictProperties['expression'] )
-        if expression.hasParserError():
-            self.msg.show( QApplication.translate( "EventManager", "[Error] " ) + \
-                expression.parserErrorString(), 'critical' )
-            return False
-
-        if expression.needsGeometry():
-            if self.iface:
-                # This block was borrowed from QGIS/python/plugins/processing/algs/qgis/FieldsCalculator.py 
-                da = QgsDistanceArea()
-                da.setSourceCrs( layer.crs().srsid() )
-                da.setEllipsoidalMode( self.iface.mapCanvas().mapSettings().hasCrsTransformEnabled() )
-                da.setEllipsoid( QgsProject.instance().readEntry( 'Measure', '/Ellipsoid', GEO_NONE )[0] )
-                expression.setGeomCalculator( da )
-                if QGis.QGIS_VERSION_INT >= 21400: # Methods added in QGIS 2.14
-                    expression.setDistanceUnits( QgsProject.instance().distanceUnits() ) 
-                    expression.setAreaUnits( QgsProject.instance().areaUnits() )
         
-        expression.prepare( context )
-        result = expression.evaluate( context )
-        
-        if expression.hasEvalError():
-            self.msg.show( QApplication.translate( "EventManager", "[Error] " ) + \
-                expression.evalErrorString(), 'critical' )
-            return False
+        if result is None:
+            context = QgsExpressionContext()
+            context.appendScope( QgsExpressionContextUtils.globalScope() )
+            context.appendScope( QgsExpressionContextUtils.projectScope() )
+            context.appendScope( QgsExpressionContextUtils.layerScope( layer ) )
+            context.setFields( feature.fields() )
+            context.setFeature( feature )
+
+            if expression.needsGeometry():
+                if self.iface:
+                    # This block was borrowed from QGIS/python/plugins/processing/algs/qgis/FieldsCalculator.py 
+                    da = QgsDistanceArea()
+                    da.setSourceCrs( layer.crs().srsid() )
+                    da.setEllipsoidalMode( self.iface.mapCanvas().mapSettings().hasCrsTransformEnabled() )
+                    da.setEllipsoid( QgsProject.instance().readEntry( 'Measure', '/Ellipsoid', GEO_NONE )[0] )
+                    expression.setGeomCalculator( da )
+                    if QGis.QGIS_VERSION_INT >= 21400: # Methods added in QGIS 2.14
+                        expression.setDistanceUnits( QgsProject.instance().distanceUnits() ) 
+                        expression.setAreaUnits( QgsProject.instance().areaUnits() )
+            
+            expression.prepare( context )
+            result = expression.evaluate( context )
+            
+            if expression.hasEvalError():
+                self.msg.show( QApplication.translate( "EventManager", "[Error] (Evaluating) " ) + \
+                    expression.evalErrorString(), 'critical' )
+                result = NULL
         
         field = layer.fields()[fieldIndex]
         res = field.convertCompatible( result )
