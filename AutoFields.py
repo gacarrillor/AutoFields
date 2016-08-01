@@ -24,7 +24,7 @@ import os
 from qgis.core import QgsApplication
 from PyQt4.QtCore import ( Qt, QTranslator, QFileInfo, QCoreApplication, 
     QLocale, QSettings )
-from PyQt4.QtGui import QIcon, QAction
+from PyQt4.QtGui import QIcon, QAction, QDockWidget
 import resources_rc
 from AutoFieldsDockWidget import AutoFieldsDockWidget
 from AutoFieldManager import AutoFieldManager
@@ -40,6 +40,22 @@ class AutoFields:
 
 
   def initGui( self ):  
+  
+    # Remove Redo buttons from menus and toolbars, they can lead to crashes due 
+    #   to a corrupted undo stack.
+    redoActionList = [action for action in self.iface.advancedDigitizeToolBar().actions() if action.objectName() == u'mActionRedo']
+    if redoActionList:
+        self.iface.advancedDigitizeToolBar().removeAction( redoActionList[0] )
+        self.iface.editMenu().removeAction( redoActionList[0] )    
+
+    QSettings().setValue( "/shortcuts/Redo", "" ) # Override Redo shortcut
+
+    # This block (2 options for disabling the Undo panel) didn't work
+    #QSettings().setValue( '/UI/Customization/enabled', True )
+    #QSettings( "QGIS", "QGISCUSTOMIZATION2" ).setValue( '/Customization/Panels/Undo', False )
+    #undoDock = self.iface.mainWindow().findChild( QDockWidget, u'Undo' )
+    #self.iface.removeDockWidget( undoDock )  
+  
     # Create action that will start plugin configuration
     self.action = QAction(QIcon( ":/plugins/AutoFields/icon.png"), \
         "Configure automatic fields...", self.iface.mainWindow() )

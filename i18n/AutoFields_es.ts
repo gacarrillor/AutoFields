@@ -61,6 +61,14 @@ Necesitarías exportar los datos a otro formato para agregar AutoFields.</transl
         <source> has no field called </source>
         <translation> no tiene un campo llamado </translation>
     </message>
+    <message>
+        <source>[Warning] AutoField with Id </source>
+        <translation>[Warning] No se encontró el AutoField con Id </translation>
+    </message>
+    <message>
+        <source> was not found, so it couldn&apos;t be removed.</source>
+        <translation>, por lo cual no pudo ser removido.</translation>
+    </message>
 </context>
 <context>
     <name>AutoFieldsDockWidget</name>

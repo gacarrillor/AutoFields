@@ -154,6 +154,13 @@ class AutoFieldManager( QObject ):
     
     def removeAutoField( self, autoFieldId ):
         """ Get rid of AutoField from both QSettings and dictAutoFields """
+        if not autoFieldId in self.dictAutoFields:
+            self.msg.show( QApplication.translate( "AutoFieldManager",
+                "[Warning] AutoField with Id " ) + autoFieldId + \
+                QApplication.translate( "AutoFieldManager",
+                    " was not found, so it couldn't be removed." ), 'warning' )
+            return False
+        
         self.settings.beginGroup( self.settingsPrefix + "/data" )
         self.settings.remove( autoFieldId )
         self.settings.endGroup()
