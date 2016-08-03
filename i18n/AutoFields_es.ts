@@ -312,6 +312,10 @@ Necesitarías exportar los datos a otro formato para agregar AutoFields.</transl
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;License: GNU GPL 2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Licencia: GNU GPL 2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>Only show enabled AutoFields</source>
+        <translation>Solo mostrar AutoFields habilitados</translation>
+    </message>
     <message utf8="true">
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Testers (volunteers):&lt;/span&gt;&lt;/p&gt;
 Thomas Baumann&lt;br/&gt;
@@ -322,15 +326,13 @@ Erwin Galvis&lt;br/&gt;
 Romina González Musso&lt;br/&gt;
 Andrés Guarín&lt;br/&gt;
 William Guerrero&lt;br/&gt;
+Arturo Lorenzo&lt;br/&gt;
+Sandra Liliana Moreno&lt;br/&gt;
 Enrique Morón&lt;br/&gt;
 Leonardo Porto Nazareth&lt;br/&gt;
 Marcela Suárez&lt;br/&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Only show enabled AutoFields</source>
-        <translation>Solo mostrar AutoFields habilitados</translation>
     </message>
 </context>
 <context>
