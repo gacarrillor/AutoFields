@@ -26,7 +26,7 @@ def description():
   return "Automatic vector field updates when modifying or creating features"
 
 def version(): 
-  return "Version 0.2.5" 
+  return "Version 0.2.6" 
 
 def qgisMinimumVersion():
   return "2.0"

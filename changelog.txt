@@ -1,4 +1,13 @@
 Changes:
+  [0.2.6] (20160802) 
+   - GUI: Add checkbox to filter (only show enabled AutoFields) the list of 
+     AutoFields.
+   - Event Manager: If an expression has parse or eval errors, None is passed 
+     as result to changeAttributeValue, which is stored by QGIS as NULL. This
+     fixes a bug that happened returning False from aforementioned errors.
+   - Hide Redo buttons and keyboard shortcut from QGIS GUI because it can lead
+     to QGIS crashes due to corrupted undo stack.
+   - Small fix in removeAutoField. Check that autoFieldId to remove exists.
   [0.2.5] (20160726) 
    - Added support for translations. Added Spanish translation.
    - Added support for getting area and distance units in calculations from
