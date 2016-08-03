@@ -287,7 +287,7 @@ class EventManager( QObject ):
         else: # Save to layer
             layer.changeAttributeValue( featureId, fieldIndex, res )
         
-        self.msg.show( "[Info] * AutoField's value updated to " + str(res) + \
+        self.msg.show( "[Info] * AutoField's value updated to " + unicode(res) + \
             ", (" + layer.name() + "." + dictProperties['field'] + ") by " + event +".", 'info', True )
         
         
