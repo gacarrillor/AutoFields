@@ -246,7 +246,7 @@ Necesitarías exportar los datos a otro formato para agregar AutoFields.</transl
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished">Habilitado</translation>
+        <translation>Habilitado</translation>
     </message>
     <message>
         <source>Layer4</source>
@@ -270,7 +270,7 @@ Necesitarías exportar los datos a otro formato para agregar AutoFields.</transl
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished">Inhabilitado</translation>
+        <translation>Inhabilitado</translation>
     </message>
     <message>
         <source>Layer3</source>
@@ -291,10 +291,6 @@ Necesitarías exportar los datos a otro formato para agregar AutoFields.</transl
     <message>
         <source>About</source>
         <translation>Acerca de</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;The &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;AutoFields&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; plugin allows you to configure automatic field updates when creating or modifying vector features.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;El plugin &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;AutoFields&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; permite configurar actualizaciones automáticas sobre campos cuando creas o modificas registros en capas vectoriales.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Documentation</source>
@@ -333,6 +329,10 @@ Leonardo Porto Nazareth&lt;br/&gt;
 Marcela Suárez&lt;br/&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;The &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;AutoFields&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; plugin allows you to configure automatic attribute updates when creating or modifying vector features.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;El plugin &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;AutoFields&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; permite configurar actualizaciones automáticas sobre atributos cuando creas o modificas registros en capas vectoriales.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

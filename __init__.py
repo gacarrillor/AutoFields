@@ -3,7 +3,7 @@
 /***************************************************************************
 AutoFields
 A QGIS plugin
-Automatic vector field updates when modifying or creating features
+Automatic attribute updates when creating or modifying vector features
                              -------------------
 begin                : 2016-05-22 
 copyright            : (C) 2016 by Germán Carrillo (GeoTux)
@@ -26,7 +26,7 @@ def description():
   return "Automatic vector field updates when modifying or creating features"
 
 def version(): 
-  return "Version 0.2.6" 
+  return "Version 0.2.7" 
 
 def qgisMinimumVersion():
   return "2.0"

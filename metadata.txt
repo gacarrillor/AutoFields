@@ -1,12 +1,19 @@
 [general]
 name=AutoFields
-description=Automatic vector field updates when modifying or creating features
-version=0.2.6
+description=Automatic attribute updates when creating or modifying vector features
+version=0.2.7
 qgisMinimumVersion=2.0
 category=Vector
 author=Germán Carrillo (GeoTux)
 email=gcarrillo@linuxmail.org
 changelog=
+  [0.2.7] (20160804) 
+   - Implement order for AutoFields storage and for setting event connections, 
+     so that scenarios of AutoFields depending on other AutoFields become 
+     predictable.
+   - EventManager: Change str() by unicode() in a debug message that was 
+     causing a Python error if values calculated contained non-ascii characters.
+   - Adjusted plugin description in all Python files.
   [0.2.6] (20160802) 
    - GUI: Add checkbox to filter (only show enabled AutoFields) the list of 
      AutoFields.

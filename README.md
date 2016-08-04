@@ -1,6 +1,6 @@
-# AutoFields (still under development)
+# AutoFields
 
-QGIS plugin to configure automatic vector field updates when creating or modifying features.
+QGIS plugin to configure automatic attribute updates when creating or modifying vector features.
 
 See detailed documentation, examples, and FAQ at GeoTux.
 
