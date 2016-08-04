@@ -73,6 +73,9 @@ class EventManager( QObject ):
                 'warning', True )
             return
         
+        self.msg.show( "[Info] Setting events for AutoField " + autoFieldId + ".",
+            'info', True )
+        
         layer = QgsMapLayerRegistry.instance().mapLayer( dictProperties['layerId'] )
         capabilities = layer.dataProvider().capabilities()
 

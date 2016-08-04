@@ -20,6 +20,8 @@ email                : gcarrillo@linuxmail.org
  ***************************************************************************/
 """
 
+from collections import OrderedDict
+
 from qgis.core import QgsMapLayerRegistry, QgsVectorLayer, QgsVectorDataProvider
 from PyQt4.QtCore import QObject, QSettings, pyqtSignal
 from PyQt4.QtGui import QApplication
@@ -41,7 +43,7 @@ class AutoFieldManager( QObject ):
         QObject.__init__( self )
         self.msg = messageManager
         self.settings = QSettings( organizationName, applicationName ) if organizationName and applicationName else QSettings()
-        self.dictAutoFields = {}
+        self.dictAutoFields = OrderedDict()
         self.settingsPrefix = settingsPrefix
         self.eventManager = EventManager( self.msg, iface, settingsPrefix )
         self.eventManager.layersAddedCheckIfAutoFields.connect( self.checkAndEnableAutoFieldsForLayers )
@@ -126,9 +128,15 @@ class AutoFieldManager( QObject ):
             return False
         
         # Create AutoField in dictionary
+        if not self.dictAutoFields:
+            order = 1
+        else:
+            order = max( self.dictAutoFields.iteritems(), 
+                        key=lambda d: d[1]['order'] )[1]['order'] + 1
+            
         self.dictAutoFields[autoFieldId] = { 'layer':layer.publicSource(), 
             'field':fieldName, 'expression':expression, 'layer2':layer2, 
-            'field2':field2, 'layerId': layer.id() }
+            'field2':field2, 'layerId': layer.id(), 'order': order }
         self.dictAutoFields[autoFieldId]['enabled'] = self.validateAutoField( self.dictAutoFields[autoFieldId] )
                
         # Create AutoField in QSettings and set corresponding events
@@ -177,8 +185,9 @@ class AutoFieldManager( QObject ):
        
        
     def readAutoFields( self ):
-        """ Read AutoFields from QSettings, ovewriting dictAutoFields """
-        self.dictAutoFields = {}
+        """ Read AutoFields from QSettings, overwriting dictAutoFields """
+        self.dictAutoFields = OrderedDict()
+        dictTempAutoFields = {} # We will sort it when everything is read
         self.settings.beginGroup( self.settingsPrefix + "/data" )
         autoFieldsIds = self.settings.childGroups()
         self.settings.endGroup()
@@ -190,6 +199,7 @@ class AutoFieldManager( QObject ):
             dictTmpProperties['expression'] = self.settings.value( "expression", u"", type=unicode )
             dictTmpProperties['layer2'] = self.settings.value( "layer2", "", type=str )
             dictTmpProperties['field2'] = self.settings.value( "field2", "", type=str )            
+            dictTmpProperties['order'] = self.settings.value( "order", 0, type=int )  
             self.settings.endGroup()
             
             # Check whether the AutoField must be enabled or not
@@ -199,8 +209,14 @@ class AutoFieldManager( QObject ):
 
             dictTmpProperties['enabled'] = self.validateAutoField( dictTmpProperties )
             
-            self.dictAutoFields[autoFieldId] = dictTmpProperties
-            
+            dictTempAutoFields[autoFieldId] = dictTmpProperties
+        
+        
+        # We need to set events in order of creation, so that the use case of
+        #   AutoFields depending on other AutoFields becomes predictable    
+        self.dictAutoFields = OrderedDict( sorted( dictTempAutoFields.items(), 
+                                            key=lambda d: d[1]['order'] ) )
+        
         for autoFieldId in self.dictAutoFields.keys():
             self.eventManager.setEventsForAutoField( autoFieldId, self.dictAutoFields[autoFieldId] )
     
@@ -214,6 +230,7 @@ class AutoFieldManager( QObject ):
         self.settings.setValue( "layer2", dictProperties['layer2'] )
         self.settings.setValue( "field2", dictProperties['field2'] )
         self.settings.setValue( "enabled", dictProperties['enabled'] )
+        self.settings.setValue( "order", dictProperties['order'] )
         self.settings.endGroup()
         self.settings.sync()
     
