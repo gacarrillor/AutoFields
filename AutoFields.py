@@ -58,7 +58,7 @@ class AutoFields:
   
     # Create action that will start plugin configuration
     self.action = QAction(QIcon( ":/plugins/AutoFields/icon.png"), \
-        "Configure automatic fields...", self.iface.mainWindow() )
+        "AutoFields plugin...", self.iface.mainWindow() )
     # connect the action to the run method
     self.action.triggered.connect( self.run )
 

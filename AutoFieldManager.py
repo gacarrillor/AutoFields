@@ -260,8 +260,11 @@ class AutoFieldManager( QObject ):
         
         
     def normalizeSource( self, source ):
-        """ Avoid issues with spaces and other weird characters in AutoField ids """
-        return source.replace(" ","").replace("\"","").replace("'","").replace("/","|").replace("\\","|")
+        """ Avoid issues with spaces and other weird characters for AutoField ids """
+        pieces = source.split(" ")
+        newPieces = [ piece for piece in pieces if not (piece.startswith("type=") or piece.startswith("srid=")) ]
+        source = "".join( newPieces )
+        return source.replace("\"","").replace("'","").replace("/","|").replace("\\","|")
            
            
     def buildAutoFieldId( self, layer, fieldName ):
@@ -292,7 +295,7 @@ class AutoFieldManager( QObject ):
            
             
     def getLayer( self, autoFieldLayerSource ):
-        """ Iterate layers and get one comparing sources """
+        """ Iterate layers and get one, comparing sources """
         for tmpLayer in QgsMapLayerRegistry.instance().mapLayers().values():
             if self.compareLayersPublicSources( tmpLayer.publicSource(), autoFieldLayerSource ):
                 return tmpLayer
@@ -332,7 +335,7 @@ class AutoFieldManager( QObject ):
         """ After a notification on layers being removed, disable all their AutoFields """ 
         #for layerId in layerIds:
         for autoFieldId in self.dictAutoFields:
-            if 'layerId' in self.dictAutoFields[autoFieldId]: 
+            if 'layerId' in self.dictAutoFields[autoFieldId]:
                 if layerId == self.dictAutoFields[autoFieldId]['layerId']:       
                     self.dictAutoFields[autoFieldId]['enabled'] = False
                     self.writeAutoField( autoFieldId, self.dictAutoFields[autoFieldId] )

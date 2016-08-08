@@ -160,19 +160,19 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
 
 
         # Update expression controls
-        if 0 in geometryTypeSet and len( geometryTypeSet ) == 1:
+        if 0 in geometryTypeSet and len( geometryTypeSet ) == 1: # Points
             self.optXCoord.setEnabled( True )
             self.optYCoord.setEnabled( True )
             self.optLength.setEnabled( False )
             self.optPerimeter.setEnabled( False )
             self.optArea.setEnabled( False )
-        elif 1 in geometryTypeSet and len( geometryTypeSet ) == 1:
+        elif 1 in geometryTypeSet and len( geometryTypeSet ) == 1: # Lines
             self.optXCoord.setEnabled( False )
             self.optYCoord.setEnabled( False )
             self.optLength.setEnabled( True )
             self.optPerimeter.setEnabled( False )
             self.optArea.setEnabled( False )
-        elif 2 in geometryTypeSet and len( geometryTypeSet ) == 1:
+        elif 2 in geometryTypeSet and len( geometryTypeSet ) == 1: # Polygons
             self.optXCoord.setEnabled( False )
             self.optYCoord.setEnabled( False )
             self.optLength.setEnabled( False )
