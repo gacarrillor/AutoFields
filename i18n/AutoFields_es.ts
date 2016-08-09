@@ -205,10 +205,6 @@ Necesitarías exportar los datos a otro formato para agregar AutoFields.</transl
         <translation>Sello de Tiempo (Time Stamp)</translation>
     </message>
     <message>
-        <source>Save AutoField</source>
-        <translation>Guardar AutoField</translation>
-    </message>
-    <message>
         <source>List of AutoFields</source>
         <translation>Lista de AutoFields</translation>
     </message>
@@ -333,6 +329,10 @@ Marcela Suárez&lt;br/&gt;
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;The &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;AutoFields&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; plugin allows you to configure automatic attribute updates when creating or modifying vector features.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;El plugin &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-style:italic;&quot;&gt;AutoFields&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; permite configurar actualizaciones automáticas sobre atributos cuando creas o modificas registros en capas vectoriales.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Save AutoFields</source>
+        <translation>Guardar AutoFields</translation>
     </message>
 </context>
 <context>

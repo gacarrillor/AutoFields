@@ -76,6 +76,10 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
 
         QgsMapLayerRegistry.instance().legendLayersAdded.connect( self.populateLayersTable )
         QgsMapLayerRegistry.instance().layersRemoved.connect( self.populateLayersTable )
+        # Also listen to Layer Tree node position changes
+        self.root.addedChildren.connect( self.populateLayersTable )
+        self.root.removedChildren.connect( self.populateLayersTable )
+        
         self.tblLayers.itemSelectionChanged.connect( self.updateFieldAndExpressionControls )
         self.optNewField.toggled.connect( self.newFieldToggled )                
         self.cboField.currentIndexChanged.connect( self.fieldChanged )
@@ -104,8 +108,11 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         self.btnRemoveAutoFields.clicked.connect( self.removeAutoFieldFromTable )
         
 
-    def populateLayersTable( self, foo=None ):
-        """ List vector layers that support changes in attributes and are writable """
+    def populateLayersTable( self, foo=None, foo2=None, foo3=None ):
+        """ List vector layers that support changes in attributes and are writable.
+            Arguments are 3 and optional because this function listens to several 
+            SIGNALs.
+        """
         
         # Initialize Layers Table
         self.tblLayers.clearContents()
@@ -587,6 +594,9 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         """ Terminates all SIGNAL/SLOT connections created by this class """
         QgsMapLayerRegistry.instance().legendLayersAdded.disconnect( self.populateLayersTable )
         QgsMapLayerRegistry.instance().layersRemoved.disconnect( self.populateLayersTable )
+        self.root.addedChildren.disconnect( self.populateLayersTable )
+        self.root.removedChildren.disconnect( self.populateLayersTable )
+        
         self.tblLayers.itemSelectionChanged.disconnect( self.updateFieldAndExpressionControls )
         self.optNewField.toggled.disconnect( self.newFieldToggled )
         self.cboField.currentIndexChanged.disconnect( self.fieldChanged )

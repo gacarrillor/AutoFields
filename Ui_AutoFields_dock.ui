@@ -604,7 +604,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Save AutoField</string>
+           <string>Save AutoFields</string>
           </property>
          </widget>
         </item>
@@ -855,7 +855,7 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-111</y>
+             <y>0</y>
              <width>282</width>
              <height>550</height>
             </rect>
