@@ -135,7 +135,7 @@ class AutoFieldsTests( unittest.TestCase ):
         """ AutoField value should be updated if another AutoField value is changed """
         self.msg.show( "Info! Test 4 started", 'info', True )
 
-        res = self.autoFieldManager.createAutoField(
+        self.autoFieldManager.createAutoField(
             layer=self.layer, 
             fieldName=u'modified', 
             expression=u'\'now: \' + to_string("f1")'

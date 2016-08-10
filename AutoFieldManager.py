@@ -147,7 +147,7 @@ class AutoFieldManager( QObject ):
             layer.name() + "." + fieldName + ": " + expression + \
             QApplication.translate( "AutoFieldManager", ") was created properly!" ), 'info' )
         self.autoFieldCreated.emit( autoFieldId )
-        return True
+        return autoFieldId
     
     
     def overwriteAutoField( self, layer, fieldName, expression, layer2="", field2="" ):
