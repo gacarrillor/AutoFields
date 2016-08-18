@@ -26,10 +26,10 @@ def description():
   return "Automatic vector field updates when modifying or creating features"
 
 def version(): 
-  return "Version 0.2.7" 
+  return "Version 0.3.0" 
 
 def qgisMinimumVersion():
-  return "2.0"
+  return "2.12"
 
 def icon():
     return "icon.png"

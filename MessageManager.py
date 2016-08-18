@@ -20,7 +20,6 @@ email                : gcarrillo@linuxmail.org
  ***************************************************************************/
 """
 #from qgis.core import QgsMessageLog
-from qgis.gui import QgsMessageBar
 from PyQt4.QtGui import QPushButton
 
 class MessageManager():

@@ -1,13 +1,21 @@
 [general]
 name=AutoFields
 description=Automatic attribute updates when creating or modifying vector features
-version=0.2.7
-qgisMinimumVersion=2.0
+version=0.3.0
+qgisMinimumVersion=2.12
 category=Vector
 author=Germán Carrillo (GeoTux)
 email=gcarrillo@linuxmail.org
 changelog=
-  [0.2.7] (20160804) 
+  [0.3.0] (20160817)
+   - Official release!
+   - AutoFieldManager: normalize sources from 'Add PostgreSQL layer' and 
+     DBManager so that they coincide.
+   - AutoFieldManager: Make createAutoFields return the autoFieldId on success,
+     as it can be used later to remove the AutoField via removeAutoField.
+   - GUI: Layer list now listens to Layer Tree SIGNALs to keep itself updated.
+   - Added link to documentation from About tab. It's aware of language [en|es]. 
+  [0.2.7] (20160804)
    - Implement order for AutoFields storage and for setting event connections, 
      so that scenarios of AutoFields depending on other AutoFields become 
      predictable.
@@ -57,7 +65,7 @@ tags=area, auto, automatic, attribute, calculation, column, coordinates,
   expression, feature, field, fill, geometry, layer, populate, property, 
   refresh, shapefile, trigger, update, vector
 about=This plugin allows you to configure vector fields to be automatically calculated for you when digitizing new features or modifying existing ones. Think about it as triggers in a database or as an automatic Field Calculator.
-homepage=http://geotux.tuxfamily.org
+homepage=http://geotux.tuxfamily.org/index.php/en/geo-blogs/item/333-autofields-plugin-for-qgis
 tracker=https://github.com/gacarrillor/AutoFields/issues
 repository=https://github.com/gacarrillor/AutoFields
 icon=icon.png

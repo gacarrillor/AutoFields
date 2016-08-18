@@ -36,6 +36,7 @@ class AutoFields:
   def __init__( self, iface ):
     self.iface = iface
     self.messageMode = 'production' # 'production' or 'debug'
+    self.language='en' 
     self.installTranslator()
 
 
@@ -76,7 +77,7 @@ class AutoFields:
     self.autoFieldManager = AutoFieldManager( self.messageManager, self.iface )
     self.autoFieldManager.readAutoFields()
 
-    self.dockWidget = AutoFieldsDockWidget( self.iface.mainWindow(), self.iface, self.autoFieldManager, self.messageManager )
+    self.dockWidget = AutoFieldsDockWidget( self.iface.mainWindow(), self.iface, self.autoFieldManager, self.messageManager, self.language )
     self.iface.addDockWidget( Qt.RightDockWidgetArea, self.dockWidget )
 
 
@@ -103,6 +104,8 @@ class AutoFields:
 
     locale = QSettings().value( "locale/userLocale", type=str )
     myLocale = str( locale[0:2] )
+    if myLocale == 'es':
+      self.language='es'
 
     if os.path.exists( userPluginPath ):
       translationPath = os.path.join( userPluginPath, 'i18n', "AutoFields_" + myLocale + ".qm" )

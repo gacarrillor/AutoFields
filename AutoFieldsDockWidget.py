@@ -34,9 +34,10 @@ from ExpressionBuilderDialog import ExpressionBuilderDialog
 class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
     """ Class in charge of all the UI logic """
 
-    def __init__( self, parent, iface, autoFieldManager, messageManager ):
+    def __init__( self, parent, iface, autoFieldManager, messageManager, language='en' ):
         self.iface = iface 
         self.msg = messageManager
+        self.language = language
         QDockWidget.__init__( self, parent )
         # Set up the user interface from Designer.
         self.setupUi( self )
@@ -106,6 +107,9 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         self.tblAutoFields.itemSelectionChanged.connect( self.updateRemoveAutoFieldButton )
         self.chkOnlyEnabledAutoFields.toggled.connect( self.saveShowOnlyEnabledPreference )
         self.btnRemoveAutoFields.clicked.connect( self.removeAutoFieldFromTable )
+        
+        # About Tab
+        self.btnHelp.clicked.connect( self.openDocumentation )
         
 
     def populateLayersTable( self, foo=None, foo2=None, foo3=None ):
@@ -589,6 +593,12 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         settings.setValue( self.autoFieldManager.settingsPrefix + "/showOnlyEnabledAutoFields" , status )
         self.populateAutoFieldsTable()
     
+    
+    def openDocumentation( self ):
+        """ Open a browser to show documentation page """
+        import webbrowser
+        webbrowser.open( "http://geotux.tuxfamily.org/index.php/"+ self.language +"/geo-blogs/item/333-autofields-plugin-for-qgis" )
+        
     
     def disconnectAll( self ):
         """ Terminates all SIGNAL/SLOT connections created by this class """

@@ -1,4 +1,12 @@
 Changes:
+  [0.3.0] (20160817)
+   - Official release!
+   - AutoFieldManager: normalize sources from 'Add PostgreSQL layer' and 
+     DBManager so that they coincide.
+   - AutoFieldManager: Make createAutoFields return the autoFieldId on success,
+     as it can be used later to remove the AutoField via removeAutoField.
+   - GUI: Layer list now listens to Layer Tree SIGNALs to keep itself updated.
+   - Added link to documentation from About tab. It's aware of language [en|es]. 
   [0.2.7] (20160804) 
    - Implement order for AutoFields storage and for setting event connections, 
      so that scenarios of AutoFields depending on other AutoFields become 
