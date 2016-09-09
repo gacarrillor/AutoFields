@@ -2,6 +2,9 @@
 
 QGIS plugin to configure automatic attribute updates when creating or modifying vector features.
 
+![Automatic updates on vector fields](http://downloads.tuxfamily.org/tuxgis/tmp/akqfv3(1).gif)
+
+
 See detailed documentation, examples, videos, FAQ, and known issues at:
 http://geotux.tuxfamily.org/index.php/en/geo-blogs/item/333-autofields-plugin-for-qgis
 
