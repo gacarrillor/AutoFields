@@ -71,6 +71,17 @@ Necesitarías exportar los datos a otro formato para agregar AutoFields.</transl
     </message>
 </context>
 <context>
+    <name>AutoFields-FieldCalculator</name>
+    <message>
+        <source>[Error] (Parsing) </source>
+        <translation>[Error] (Parseando) </translation>
+    </message>
+    <message>
+        <source>[Error] (Evaluating) </source>
+        <translation>[Error] (Evaluando) </translation>
+    </message>
+</context>
+<context>
     <name>AutoFieldsDockWidget</name>
     <message>
         <source>Layers</source>
@@ -333,6 +344,14 @@ Marcela Suárez&lt;br/&gt;
     <message>
         <source>Save AutoFields</source>
         <translation>Guardar AutoFields</translation>
+    </message>
+    <message>
+        <source>If there are features in this layer already, enabling this option calculates the expression on them</source>
+        <translation>Si ya existen registros en esta capa, habilita esta opción para calcular la expresión sobre ellos.</translation>
+    </message>
+    <message>
+        <source>Calculate expression on existing features</source>
+        <translation>Calcular expresión en registros existentes</translation>
     </message>
 </context>
 <context>

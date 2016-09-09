@@ -1,12 +1,14 @@
 [general]
 name=AutoFields
 description=Automatic attribute updates when creating or modifying vector features
-version=0.3.0
+version=0.4.0
 qgisMinimumVersion=2.12
 category=Vector
 author=Germán Carrillo (GeoTux)
 email=gcarrillo@linuxmail.org
 changelog=
+  [0.4.0] (20160909)
+   - New option to calculate the expression on existing features. 
   [0.3.0] (20160817)
    - Official release!
    - AutoFieldManager: normalize sources from 'Add PostgreSQL layer' and 

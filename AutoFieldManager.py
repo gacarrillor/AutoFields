@@ -27,6 +27,7 @@ from PyQt4.QtCore import QObject, QSettings, pyqtSignal
 from PyQt4.QtGui import QApplication
 
 from EventManager import EventManager
+from FieldCalculator import FieldCalculator
 
 class AutoFieldManager( QObject ):
     """ Class in charge of the AutoFields administration. 
@@ -52,9 +53,11 @@ class AutoFieldManager( QObject ):
         self.eventManager.attributesDeletedCheckIfAutoFields.connect( self.checkAndDisableAutoFieldsForLayer )
         
         self.eventManager.setAFM( self )
+        
+        self.fieldCalculator = FieldCalculator( self.msg, iface )
     
     
-    def createAutoField( self, layer, fieldName, expression, layer2="", field2="" ):
+    def createAutoField( self, layer, fieldName, expression, layer2="", field2="", calculateOnExisting=True ):
         """ Add AutoField properties to both QSettings and dictAutoFields """    
         if not layer or not type(layer) is QgsVectorLayer:
             self.msg.show( 
@@ -115,7 +118,7 @@ class AutoFieldManager( QObject ):
             self.msg.show( QApplication.translate( "AutoFieldManager",
                 "[Error] 'expression' variable has not a valid value." ),
                 'warning' )
-            return False
+            return False        
         
         autoFieldId = self.buildAutoFieldId( layer, fieldName )
         
@@ -126,6 +129,11 @@ class AutoFieldManager( QObject ):
                 "[Error] This field is already an AutoField. You cannot create another AutoField on the same field, but you can use overwriteAutoField(), which supports the same parameters." ),
                 'warning' )
             return False
+        
+
+        if calculateOnExisting: 
+            self.fieldCalculator.calculate( layer, fieldName, expression )
+
         
         # Create AutoField in dictionary
         if not self.dictAutoFields:
@@ -150,12 +158,12 @@ class AutoFieldManager( QObject ):
         return autoFieldId
     
     
-    def overwriteAutoField( self, layer, fieldName, expression, layer2="", field2="" ):
+    def overwriteAutoField( self, layer, fieldName, expression, layer2="", field2="", calculateOnExisting=True ):
         """ Logic to overwrite an existing AutoField in both QSettings and dictAutoFields """ 
         autoFieldId = self.buildAutoFieldId( layer, fieldName ) 
         if autoFieldId in self.dictAutoFields:
             self.removeAutoField( autoFieldId )        
-            return self.createAutoField( layer, fieldName, expression, layer2, field2 )
+            return self.createAutoField( layer, fieldName, expression, layer2, field2, calculateOnExisting )
 
         return False
         

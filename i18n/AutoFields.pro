@@ -3,6 +3,7 @@ FORMS = ../Ui_AutoFields_dock.ui \
 
 SOURCES = ../EventManager.py \
           ../AutoFieldManager.py \
-          ../AutoFieldsDockWidget.py
+          ../AutoFieldsDockWidget.py \
+          ../FieldCalculator.py
 
 TRANSLATIONS = AutoFields_es.ts

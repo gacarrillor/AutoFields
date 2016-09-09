@@ -97,6 +97,10 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
             self.autoFieldManager.settingsPrefix + "/showOnlyEnabledAutoFields",
             True, type=bool )
         self.chkOnlyEnabledAutoFields.setChecked( check )
+        check = settings.value( 
+            self.autoFieldManager.settingsPrefix + "/calculateOnExistingFeatures",
+            True, type=bool )
+        self.chkCalculateOnExisting.setChecked( check )
         self.btnRemoveAutoFields.setEnabled( False )
         self.tblAutoFields.sortItems(0, Qt.AscendingOrder)
         self.populateAutoFieldsTable()
@@ -106,6 +110,7 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         self.autoFieldManager.autoFieldDisabled.connect( self.populateAutoFieldsTable )
         self.tblAutoFields.itemSelectionChanged.connect( self.updateRemoveAutoFieldButton )
         self.chkOnlyEnabledAutoFields.toggled.connect( self.saveShowOnlyEnabledPreference )
+        self.chkCalculateOnExisting.toggled.connect( self.saveCalculateOnExistingPreference )        
         self.btnRemoveAutoFields.clicked.connect( self.removeAutoFieldFromTable )
         
         # About Tab
@@ -405,6 +410,7 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         """ Repetitive logic to save or overwrite an AutoField """
         # Check if the field is an AutoField and ask if we should overwrite it
         res = True
+        bCalculateOnExisting = self.chkCalculateOnExisting.isChecked()
         if self.autoFieldManager.isFieldAnAutoField( layer, fieldName ):                                        
             reply = QMessageBox.question( self.iface.mainWindow(), 
                 QApplication.translate( "AutoFieldsDockWidgetPy", "Confirmation" ),
@@ -416,10 +422,10 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
                 QMessageBox.Yes | QMessageBox.No, QMessageBox.No )
             
             if reply == QMessageBox.Yes:
-                res = self.autoFieldManager.overwriteAutoField( layer, fieldName, expression )
+                res = self.autoFieldManager.overwriteAutoField( layer, fieldName, expression, calculateOnExisting=bCalculateOnExisting )
 
         else:
-            res = self.autoFieldManager.createAutoField( layer, fieldName, expression )
+            res = self.autoFieldManager.createAutoField( layer, fieldName, expression, calculateOnExisting=bCalculateOnExisting )
 
         if not res: 
             # res will only be False if create/overwriteAutoField return False
@@ -592,7 +598,13 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
         settings = QSettings()
         settings.setValue( self.autoFieldManager.settingsPrefix + "/showOnlyEnabledAutoFields" , status )
         self.populateAutoFieldsTable()
-    
+
+
+    def saveCalculateOnExistingPreference( self, status ):
+        """ Saves the preference in QSettings """
+        settings = QSettings()
+        settings.setValue( self.autoFieldManager.settingsPrefix + "/calculateOnExistingFeatures" , status )
+
     
     def openDocumentation( self ):
         """ Open a browser to show documentation page """
