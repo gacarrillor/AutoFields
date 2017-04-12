@@ -5,9 +5,9 @@ AutoFields
 A QGIS plugin
 Automatic attribute updates when creating or modifying vector features
                              -------------------
-begin                : 2016-05-22 
+begin                : 2016-05-22
 copyright            : (C) 2016 by Germán Carrillo (GeoTux)
-email                : gcarrillo@linuxmail.org 
+email                : gcarrillo@linuxmail.org
  ***************************************************************************/
 
 /***************************************************************************
@@ -22,32 +22,33 @@ email                : gcarrillo@linuxmail.org
 
 import os
 from qgis.core import QgsApplication
-from PyQt4.QtCore import ( Qt, QTranslator, QFileInfo, QCoreApplication, 
+from PyQt4.QtCore import ( Qt, QTranslator, QFileInfo, QCoreApplication,
     QLocale, QSettings )
 from PyQt4.QtGui import QIcon, QAction, QDockWidget
 import resources_rc
 from AutoFieldsDockWidget import AutoFieldsDockWidget
+from ExportAutoFieldsDialog import ExportAutoFieldsDialog
 from AutoFieldManager import AutoFieldManager
 from MessageManager import MessageManager
 
 
-class AutoFields: 
+class AutoFields:
 
   def __init__( self, iface ):
     self.iface = iface
     self.messageMode = 'production' # 'production' or 'debug'
-    self.language='en' 
+    self.language='en'
     self.installTranslator()
 
 
-  def initGui( self ):  
-  
-    # Remove Redo buttons from menus and toolbars, they can lead to crashes due 
+  def initGui( self ):
+
+    # Remove Redo buttons from menus and toolbars, they can lead to crashes due
     #   to a corrupted undo stack.
     redoActionList = [action for action in self.iface.advancedDigitizeToolBar().actions() if action.objectName() == u'mActionRedo']
     if redoActionList:
         self.iface.advancedDigitizeToolBar().removeAction( redoActionList[0] )
-        self.iface.editMenu().removeAction( redoActionList[0] )    
+        self.iface.editMenu().removeAction( redoActionList[0] )
 
     QSettings().setValue( "/shortcuts/Redo", "" ) # Override Redo shortcut
 
@@ -55,25 +56,29 @@ class AutoFields:
     #QSettings().setValue( '/UI/Customization/enabled', True )
     #QSettings( "QGIS", "QGISCUSTOMIZATION2" ).setValue( '/Customization/Panels/Undo', False )
     #undoDock = self.iface.mainWindow().findChild( QDockWidget, u'Undo' )
-    #self.iface.removeDockWidget( undoDock )  
-  
+    #self.iface.removeDockWidget( undoDock )
+
     # Create action that will start plugin configuration
-    self.action = QAction(QIcon( ":/plugins/AutoFields/icon.png"), \
+    self.actionDock = QAction(QIcon( ":/plugins/AutoFields/icon.png"), \
         "AutoFields plugin...", self.iface.mainWindow() )
-    # connect the action to the run method
-    self.action.triggered.connect( self.run )
+    self.actionDock.triggered.connect( self.toggleDockWidget )
+
+    self.actionExport = QAction(QIcon( ":/plugins/AutoFields/icon.png"), \
+        "Export AutoFields...", self.iface.mainWindow() )
+    self.actionExport.triggered.connect( self.openExportDialog )
 
     # Add custom submenu to Vector menu
-    self.iface.addPluginToVectorMenu( "&AutoFields", self.action )
-    
+    self.iface.addPluginToVectorMenu( "&AutoFields", self.actionDock )
+    self.iface.addPluginToVectorMenu( "&AutoFields", self.actionExport )
+
     # Add a custom toolbar
     self.toolbar = self.iface.addToolBar( "AutoFields" )
     self.toolbar.setObjectName("AutoFields")
-    self.toolbar.addAction( self.action )
+    self.toolbar.addAction( self.actionDock )
+    self.toolbar.addAction( self.actionExport )
 
-    
     self.messageManager = MessageManager( self.messageMode, self.iface )
-    
+
     self.autoFieldManager = AutoFieldManager( self.messageManager, self.iface )
     self.autoFieldManager.readAutoFields()
 
@@ -83,18 +88,27 @@ class AutoFields:
 
   def unload( self ):
     # Remove the plugin menu and toolbar
-    self.iface.removePluginVectorMenu( "&AutoFields", self.action )
+    self.iface.removePluginVectorMenu( "&AutoFields", self.actionDock )
+    self.iface.removePluginVectorMenu( "&AutoFields", self.actionExport )
     self.iface.mainWindow().removeToolBar( self.toolbar )
 
     self.autoFieldManager.disconnectAll()
-    
+
     self.dockWidget.disconnectAll()
     self.dockWidget.close()
     self.iface.removeDockWidget( self.dockWidget )
 
 
-  def run( self ):
-    self.dockWidget.show()
+  def toggleDockWidget( self ):
+    if self.dockWidget1:
+      if self.dockWidget1.isVisible():
+        self.dockWidget1.hide()
+      else:
+        self.dockWidget1.show()
+
+  def openExportDialog( self ):
+    dlg = ExportAutoFieldsDialog( self.iface.mainWindow(), self.autoFieldManager, self.messageManager )
+    dlg.show()
 
 
   def installTranslator( self ):
