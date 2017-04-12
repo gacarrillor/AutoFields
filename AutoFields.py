@@ -63,8 +63,8 @@ class AutoFields:
         "AutoFields plugin...", self.iface.mainWindow() )
     self.actionDock.triggered.connect( self.toggleDockWidget )
 
-    self.actionExport = QAction(QIcon( ":/plugins/AutoFields/icon.png"), \
-        "Export AutoFields...", self.iface.mainWindow() )
+    self.actionExport = QAction(QIcon( ":/plugins/AutoFields/icons/export.png"), \
+        "Export AutoFields to JSON file...", self.iface.mainWindow() )
     self.actionExport.triggered.connect( self.openExportDialog )
 
     # Add custom submenu to Vector menu

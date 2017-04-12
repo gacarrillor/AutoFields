@@ -85,12 +85,20 @@ class ExportAutoFieldsDialog( QDialog, Ui_ExportAutoFieldsDialog ):
             if not path.endswith( '.json' ):
                 path += '.json'
             self.txtExportFile.setText( path )
+            settings.setValue( self.autoFieldManager.settingsPrefix + "/export/dir", os.path.dirname( path ) )
 
 
     def doExport( self ):
         listAFExport = []
-        for dictAF in self.autoFieldManager.dictAutoFields.values(): # TODO only selected
-            listAFExport.append( {k:v for k,v in dictAF.iteritems() if k in ['layer','field','expression','order']} )
+        # Column 0 has the AutoField id
+        selectedAutoFieldIds = [ item.data( Qt.UserRole ) for item in self.tblAutoFields.selectedItems() if item.column() == 0 ]
+
+        for afId,dictAF in self.autoFieldManager.dictAutoFields.iteritems():
+            if afId in selectedAutoFieldIds:
+                listAFExport.append( {k:v for k,v in dictAF.iteritems() if k in ['layer','field','expression','order']} )
+
+        #for dictAF in self.autoFieldManager.dictAutoFields.values(): # TODO only selected
+        #    listAFExport.append( {k:v for k,v in dictAF.iteritems() if k in ['layer','field','expression','order']} )
 
         f = open( self.txtExportFile.text(), "wt" )
         f.write(json.dumps( {'AutoFields':listAFExport}, ensure_ascii=False, sort_keys=True, indent=3) .encode( 'utf-8' ) )

@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="plugins/AutoFields">
+    <file>icons/import.png</file>
+    <file>icons/export.png</file>
     <file>icons/logo_80x94.png</file>
     <file>icons/info.png</file>
     <file>icons/polygons.png</file>
