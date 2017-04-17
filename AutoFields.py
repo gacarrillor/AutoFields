@@ -20,14 +20,17 @@ email                : gcarrillo@linuxmail.org
  ***************************************************************************/
 """
 
-import os
+import os.path
+import json
+
 from qgis.core import QgsApplication
 from PyQt4.QtCore import ( Qt, QTranslator, QFileInfo, QCoreApplication,
     QLocale, QSettings )
-from PyQt4.QtGui import QIcon, QAction, QDockWidget
+from PyQt4.QtGui import QIcon, QAction, QDockWidget, QFileDialog, QApplication
 import resources_rc
 from AutoFieldsDockWidget import AutoFieldsDockWidget
 from ExportAutoFieldsDialog import ExportAutoFieldsDialog
+from ImportAutoFieldsDialog import ImportAutoFieldsDialog
 from AutoFieldManager import AutoFieldManager
 from MessageManager import MessageManager
 
@@ -67,15 +70,21 @@ class AutoFields:
         "Export AutoFields to JSON file...", self.iface.mainWindow() )
     self.actionExport.triggered.connect( self.openExportDialog )
 
+    self.actionImport = QAction(QIcon( ":/plugins/AutoFields/icons/import.png"), \
+        "Import AutoFields from JSON file...", self.iface.mainWindow() )
+    self.actionImport.triggered.connect( self.openImportFileDialog )
+
     # Add custom submenu to Vector menu
     self.iface.addPluginToVectorMenu( "&AutoFields", self.actionDock )
     self.iface.addPluginToVectorMenu( "&AutoFields", self.actionExport )
+    self.iface.addPluginToVectorMenu( "&AutoFields", self.actionImport )
 
     # Add a custom toolbar
     self.toolbar = self.iface.addToolBar( "AutoFields" )
     self.toolbar.setObjectName("AutoFields")
     self.toolbar.addAction( self.actionDock )
     self.toolbar.addAction( self.actionExport )
+    self.toolbar.addAction( self.actionImport )
 
     self.messageManager = MessageManager( self.messageMode, self.iface )
 
@@ -90,6 +99,7 @@ class AutoFields:
     # Remove the plugin menu and toolbar
     self.iface.removePluginVectorMenu( "&AutoFields", self.actionDock )
     self.iface.removePluginVectorMenu( "&AutoFields", self.actionExport )
+    self.iface.removePluginVectorMenu( "&AutoFields", self.actionImport )
     self.iface.mainWindow().removeToolBar( self.toolbar )
 
     self.autoFieldManager.disconnectAll()
@@ -100,15 +110,70 @@ class AutoFields:
 
 
   def toggleDockWidget( self ):
-    if self.dockWidget1:
-      if self.dockWidget1.isVisible():
-        self.dockWidget1.hide()
+    if self.dockWidget:
+      if self.dockWidget.isVisible():
+        self.dockWidget.hide()
       else:
-        self.dockWidget1.show()
+        self.dockWidget.show()
+
 
   def openExportDialog( self ):
     dlg = ExportAutoFieldsDialog( self.iface.mainWindow(), self.autoFieldManager, self.messageManager )
     dlg.show()
+
+
+  def openImportFileDialog( self ):
+    settings = QSettings()
+    path = QFileDialog.getOpenFileName( self.iface.mainWindow(), QApplication.translate( "ImportAutoFields", "Select a JSON file" ),
+      settings.value( self.autoFieldManager.settingsPrefix + "/import/dir", "", type=str ), "JSON files (*.json)" )
+    if path:
+      settings.setValue( self.autoFieldManager.settingsPrefix + "/import/dir", os.path.dirname( path ) )
+      listAutoFields = self.validateInputJSON( path )
+      # Now openImportDialog()
+      dlg = ImportAutoFieldsDialog( self.iface.mainWindow(), self.autoFieldManager, self.messageManager, listAutoFields, path, self.dockWidget.chkCalculateOnExisting.isChecked() )
+      dlg.show()
+
+
+  def validateInputJSON( self, filePath ):
+    if not os.path.isfile(filePath):
+      self.messageManager.show( QApplication.translate( "ImportAutoFields",
+            "The JSON file does not exist." ) )
+      return False
+
+    if os.path.splitext( filePath )[1] != '.json':
+      self.messageManager.show( QApplication.translate( "ImportAutoFields",
+            "File must have the 'json' extension." ) )
+      return False
+    inputFile = open( filePath )
+
+    try:
+      dictJSON = json.load( inputFile )
+    except ValueError, e:
+      inputFile.close()
+      self.messageManager.show( QApplication.translate( "ImportAutoFields",
+            "The given file is not a valid JSON." ) )
+      return False
+
+    inputFile.close()
+
+    if ['AutoFields'] != dictJSON.keys():
+      self.messageManager.show( QApplication.translate( "ImportAutoFields",
+            "Invalid JSON. The JSON file does not have a unique root property called 'AutoFields'." ) )
+      return False
+
+    listAF = dictJSON['AutoFields']
+    for dictAF in listAF:
+      if set(['layer','field','expression','order']) != set(dictAF.keys()):
+        self.messageManager.show( QApplication.translate( "ImportAutoFields",
+            "Invalid JSON. JSON content does not match what AutoFields plugin expects." ) )
+        return False
+
+    if not listAF:
+      self.messageManager.show( QApplication.translate( "ImportAutoFields",
+          "Invalid JSON. The JSON file does not contain any AutoField to import." ) )
+      return False
+
+    return listAF
 
 
   def installTranslator( self ):

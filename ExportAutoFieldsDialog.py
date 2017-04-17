@@ -22,8 +22,10 @@ email                : gcarrillo@linuxmail.org
 import os.path
 import json
 
+from qgis.core import QgsMapLayerRegistry
 from PyQt4.QtCore import Qt, QSettings
-from PyQt4.QtGui import QApplication, QDialog, QDialogButtonBox, QTableWidgetItem, QFileDialog, QMessageBox
+from PyQt4.QtGui import ( QApplication, QDialog, QDialogButtonBox,
+                          QTableWidgetItem, QFileDialog, QMessageBox )
 
 from Ui_Export_AutoFields import Ui_ExportAutoFieldsDialog
 
@@ -97,12 +99,14 @@ class ExportAutoFieldsDialog( QDialog, Ui_ExportAutoFieldsDialog ):
             if afId in selectedAutoFieldIds:
                 listAFExport.append( {k:v for k,v in dictAF.iteritems() if k in ['layer','field','expression','order']} )
 
-        #for dictAF in self.autoFieldManager.dictAutoFields.values(): # TODO only selected
-        #    listAFExport.append( {k:v for k,v in dictAF.iteritems() if k in ['layer','field','expression','order']} )
-
         f = open( self.txtExportFile.text(), "wt" )
         f.write(json.dumps( {'AutoFields':listAFExport}, ensure_ascii=False, sort_keys=True, indent=3) .encode( 'utf-8' ) )
         f.close()
+
+        # Remove?
+        if self.chkRemoveExportedAutoFields.isChecked():
+            for autoFieldId in selectedAutoFieldIds:
+                self.autoFieldManager.removeAutoField( autoFieldId )
 
 
     def accept( self ):
@@ -110,7 +114,7 @@ class ExportAutoFieldsDialog( QDialog, Ui_ExportAutoFieldsDialog ):
             QMessageBox.warning( self.parent, "Warning", "Select at least one AutoField to export." )
             return
         if not self.txtExportFile.text():
-            QMessageBox.warning( self.parent, "Warning", "Select an output file." )
+            QMessageBox.warning( self.parent, "Warning", "Select an output file before exporting." )
             return
 
         self.doExport()

@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="plugins/AutoFields">
+    <file>icons/red_arrow.png</file>
+    <file>icons/gray_arrow.png</file>
+    <file>icons/green_arrow.png</file>
+    <file>icons/orange_arrow.png</file>
     <file>icons/import.png</file>
     <file>icons/export.png</file>
     <file>icons/logo_80x94.png</file>
