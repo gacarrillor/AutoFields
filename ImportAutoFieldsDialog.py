@@ -25,10 +25,11 @@ import json
 from functools import partial
 from osgeo import ogr
 
-from qgis.core import QgsMapLayerRegistry, QgsMapLayer
+from qgis.core import QgsMapLayerRegistry, QgsMapLayer, QgsVectorDataProvider
 from PyQt4.QtCore import Qt, QSettings
 from PyQt4.QtGui import ( QApplication, QDialog, QDialogButtonBox, QComboBox,
-                          QTableWidgetItem, QFileDialog, QMessageBox, QIcon, QPixmap, QLabel )
+                          QTableWidgetItem, QFileDialog, QMessageBox, QIcon,
+                          QPixmap, QLabel )
 import resources_rc
 
 from Ui_Import_AutoFields import Ui_ImportAutoFieldsDialog
@@ -46,13 +47,12 @@ class ImportAutoFieldsDialog( QDialog, Ui_ImportAutoFieldsDialog ):
         self.filePath = filePath
         self.bCalculateOnExisting = bCalculateOnExisting
         self.listCandidates = self.getCandidates( listAutoFields )
-        #self.tblAutoFields.sortItems(0, Qt.AscendingOrder)
-        #self.tblAutoFields.setSortingEnabled( False )
         self.layers = []
         layers = QgsMapLayerRegistry.instance().mapLayers().values()
         for layer in layers:
             if layer.type() == QgsMapLayer.VectorLayer:
-                self.layers.append( layer )
+                if layer.dataProvider().capabilities() & QgsVectorDataProvider.AddFeatures:
+                    self.layers.append( layer )
 
         self.tblAutoFields.setColumnWidth( 0, 120 )
         self.tblAutoFields.setColumnWidth( 3, 80 )
@@ -188,12 +188,13 @@ class ImportAutoFieldsDialog( QDialog, Ui_ImportAutoFieldsDialog ):
         for af in listAF:
             afLayerName = self.ogrLayerName( af['layer'] )
             layers = QgsMapLayerRegistry.instance().mapLayersByName(afLayerName)
-            layers = [l for l in layers if l.type() == QgsMapLayer.VectorLayer]
+            layers = [l for l in layers if l.type() == QgsMapLayer.VectorLayer and l.dataProvider().capabilities() & QgsVectorDataProvider.AddFeatures]
             if not layers: # Check layer source
                 for layer in QgsMapLayerRegistry.instance().mapLayers().values():
                     if layer.type() == QgsMapLayer.VectorLayer:
                         if self.ogrLayerName( layer.source() ) == afLayerName:
-                            layers.append( layer )
+                            if layer.dataProvider().capabilities() & QgsVectorDataProvider.AddFeatures:
+                                layers.append( layer )
             if not layers:
                 listCandidates.append( None )
                 continue # No candidate layer for this AF

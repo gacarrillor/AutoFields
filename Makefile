@@ -1,8 +1,8 @@
 
-all: Ui_AutoFields_dock.py Ui_ExpressionBuilder.py Ui_Export_AutoFields.py Ui_Import_AutoFields.py resources_rc.py i18n/AutoFields_es.qm
+all: Ui_AutoFields_dock.py Ui_ExpressionBuilder.py Ui_Export_AutoFields.py Ui_Import_AutoFields.py Ui_Set_AutoField_on_Layer.py resources_rc.py i18n/AutoFields_es.qm
 
 clean:
-	rm -f Ui_AutoFields_dock.py Ui_ExpressionBuilder.py Ui_Export_AutoFields.py Ui_Import_AutoFields.py
+	rm -f Ui_AutoFields_dock.py Ui_ExpressionBuilder.py Ui_Export_AutoFields.py Ui_Import_AutoFields.py Ui_Set_AutoField_on_Layer.py
 	rm -f resources_rc.py
 	rm -f i18n/AutoFields_es.qm
 	rm -f *.pyc *~
@@ -21,6 +21,9 @@ Ui_Export_AutoFields.py: Ui_Export_AutoFields.ui
 
 Ui_Import_AutoFields.py: Ui_Import_AutoFields.ui
 	pyuic4 -o Ui_Import_AutoFields.py Ui_Import_AutoFields.ui
+
+Ui_Set_AutoField_on_Layer.py: Ui_Set_AutoField_on_Layer.ui
+	pyuic4 -o Ui_Set_AutoField_on_Layer.py Ui_Set_AutoField_on_Layer.ui
 
 i18n/AutoFields_es.qm: i18n/AutoFields_es.ts
 	lrelease i18n/AutoFields.pro

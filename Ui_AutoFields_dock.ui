@@ -40,7 +40,7 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-383</y>
+             <y>0</y>
              <width>288</width>
              <height>775</height>
             </rect>
@@ -1099,7 +1099,7 @@
                    <string notr="true">font: 8pt &quot;Sans Serif&quot;;</string>
                   </property>
                   <property name="text">
-                   <string>Copyright (C) 2016 Germán Carrillo</string>
+                   <string>Copyright (C) 2016-2017&lt;br/&gt;Germán Carrillo</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
