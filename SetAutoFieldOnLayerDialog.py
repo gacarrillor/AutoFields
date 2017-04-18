@@ -31,13 +31,12 @@ from Ui_Set_AutoField_on_Layer import Ui_SetAutoFieldOnLayerDialog
 
 class SetAutoFieldOnLayerDialog( QDialog, Ui_SetAutoFieldOnLayerDialog ):
 
-    def __init__( self, parent, autoFieldManager, messageManager, autoFieldId, bCalculateOnExisting ):
+    def __init__( self, parent, autoFieldManager, autoFieldId, bCalculateOnExisting ):
         QDialog.__init__( self, parent )
         self.setupUi( self )
         self.setModal( True )
         self.parent = parent
         self.autoFieldManager = autoFieldManager
-        self.messageManager = messageManager
         self.autoFieldId = autoFieldId
         self.bCalculateOnExisting = bCalculateOnExisting
 
@@ -71,9 +70,6 @@ class SetAutoFieldOnLayerDialog( QDialog, Ui_SetAutoFieldOnLayerDialog ):
         else:
             QMessageBox.warning( self.parent, "Warning", "Layer not found." )
             return
-
-        self.messageManager.show( QApplication.translate( "ExportAutoFields",
-            "Selected AutoField has been set on {}.{}.".format( layer.name(), self.autoField['field'] ) ) )
 
         self.done( 1 )
 

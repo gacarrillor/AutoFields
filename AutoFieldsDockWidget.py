@@ -588,7 +588,7 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
             if action and action.objectName() == 'action':
                 autoFieldId = self.tblAutoFields.item( row, 0 ).data( Qt.UserRole )
                 bCalculateOnExisting = self.chkCalculateOnExisting.isChecked()
-                dlg = SetAutoFieldOnLayerDialog( self.iface.mainWindow(), self.autoFieldManager, self.msg, autoFieldId, bCalculateOnExisting )
+                dlg = SetAutoFieldOnLayerDialog( self.iface.mainWindow(), self.autoFieldManager, autoFieldId, bCalculateOnExisting )
                 dlg.show()
 
 
