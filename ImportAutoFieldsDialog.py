@@ -20,6 +20,7 @@ email                : gcarrillo@linuxmail.org
  ***************************************************************************/
 """
 import os.path
+import ntpath
 import re
 import json
 from functools import partial
@@ -169,9 +170,16 @@ class ImportAutoFieldsDialog( QDialog, Ui_ImportAutoFieldsDialog ):
             # Check if we can get basename from non-existing layer
             baseName = os.path.basename(uri)
             if baseName:
-                ext = os.path.splitext( baseName )
-                if len(ext) == 2:
-                    return ext[0]
+                if baseName != uri:
+                    ext = os.path.splitext( baseName )
+                    if len(ext) == 2:
+                        return ext[0]
+                else: # Maybe a Windows path and plugin runnign on GNU/Linux?
+                    baseName = ntpath.basename(uri)
+                    if baseName:
+                        ext = ntpath.splitext( baseName )
+                        if len(ext) == 2:
+                            return ext[0]
             return None
 
         ly = ds.GetLayer(layerid)

@@ -23,7 +23,8 @@ email                : gcarrillo@linuxmail.org
 import os.path
 import json
 
-from qgis.core import QgsApplication
+from qgis.core import ( QgsApplication, QgsMapLayerRegistry, QgsMapLayer,
+                        QgsVectorDataProvider )
 from PyQt4.QtCore import ( Qt, QTranslator, QFileInfo, QCoreApplication,
     QLocale, QSettings )
 from PyQt4.QtGui import QIcon, QAction, QDockWidget, QFileDialog, QApplication
@@ -123,6 +124,19 @@ class AutoFields:
 
 
   def openImportFileDialog( self ):
+    bLayers = False
+    layers = QgsMapLayerRegistry.instance().mapLayers().values()
+    for layer in layers:
+      if layer.type() == QgsMapLayer.VectorLayer:
+        if layer.dataProvider().capabilities() & QgsVectorDataProvider.AddFeatures:
+          bLayers = True
+          break
+
+    if not bLayers:
+      self.messageManager.show( QApplication.translate( "ImportAutoFields",
+          "First load some vector layers to QGIS where you would like to import AutoFields to." ), 'warning' )
+      return
+
     settings = QSettings()
     path = QFileDialog.getOpenFileName( self.iface.mainWindow(), QApplication.translate( "ImportAutoFields", "Select a JSON file" ),
       settings.value( self.autoFieldManager.settingsPrefix + "/import/dir", "", type=str ), "JSON files (*.json)" )
