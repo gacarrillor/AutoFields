@@ -1,70 +1,74 @@
 [general]
 name=AutoFields
 description=Automatic attribute updates when creating or modifying vector features
-version=0.4.0
+version=0.5.0
 qgisMinimumVersion=2.12
 category=Vector
 author=Germán Carrillo (GeoTux)
 email=gcarrillo@linuxmail.org
 changelog=
+  [0.5.0] (20170420)
+   - New buttons to export and import AutoFields to/from JSON files.
+   - Context menu in 'List of AutoFields' tab to assing a disabled AutoField to
+     another layer.
   [0.4.0] (20160909)
-   - New option to calculate the expression on existing features. 
+   - New option to calculate the expression on existing features.
   [0.3.0] (20160817)
    - Official release!
-   - AutoFieldManager: normalize sources from 'Add PostgreSQL layer' and 
+   - AutoFieldManager: normalize sources from 'Add PostgreSQL layer' and
      DBManager so that they coincide.
    - AutoFieldManager: Make createAutoFields return the autoFieldId on success,
      as it can be used later to remove the AutoField via removeAutoField.
    - GUI: Layer list now listens to Layer Tree SIGNALs to keep itself updated.
-   - Added link to documentation from About tab. It's aware of language [en|es]. 
+   - Added link to documentation from About tab. It's aware of language [en|es].
   [0.2.7] (20160804)
-   - Implement order for AutoFields storage and for setting event connections, 
-     so that scenarios of AutoFields depending on other AutoFields become 
+   - Implement order for AutoFields storage and for setting event connections,
+     so that scenarios of AutoFields depending on other AutoFields become
      predictable.
-   - EventManager: Change str() by unicode() in a debug message that was 
+   - EventManager: Change str() by unicode() in a debug message that was
      causing a Python error if values calculated contained non-ascii characters.
    - Adjusted plugin description in all Python files.
-  [0.2.6] (20160802) 
-   - GUI: Add checkbox to filter (only show enabled AutoFields) the list of 
+  [0.2.6] (20160802)
+   - GUI: Add checkbox to filter (only show enabled AutoFields) the list of
      AutoFields.
-   - Event Manager: If an expression has parse or eval errors, None is passed 
+   - Event Manager: If an expression has parse or eval errors, None is passed
      as result to changeAttributeValue, which is stored by QGIS as NULL. This
      fixes a bug that happened returning False from aforementioned errors.
    - Hide Redo buttons and keyboard shortcut from QGIS GUI because it can lead
      to QGIS crashes due to corrupted undo stack.
    - Small fix in removeAutoField. Check that autoFieldId to remove exists.
-  [0.2.5] (20160726) 
+  [0.2.5] (20160726)
    - Added support for translations. Added Spanish translation.
    - Added support for getting area and distance units in calculations from
      QGIS preferences (QGIS v.>=2.14).
    - Expression Dialog: Added support for QGIS variables and recent expressions.
    - The plugin now deals with Adding/Removing fields in an edit session.
-   - Message with button to let users know they should save edits for 
-     calculating AutoFields when adding new features.     
-  [0.2.4] (20160722) 
+   - Message with button to let users know they should save edits for
+     calculating AutoFields when adding new features.
+  [0.2.4] (20160722)
    - Opening Custom Expression window for a field that is already an AutoField
       brings the stored expression making it possible to modify it.
    - Fix for problem on Windows regarding different path separators in public
       sources when opening the same layer from 'Add Layer' and QGIS browser.
-  [0.2.3] (20160720) 
+  [0.2.3] (20160720)
    - Overwriting an AutoField is now possible.
    - Fixed issue with QGIS locale and provider capabilities (Thanks Thomas B.)
    - Fixed issue with removing multiple layers from QGIS ToC.
-  [0.2.2] (20160718) 
-   - Workaround for QGIS crash due to bug #15311. Instead of featureAdded, use 
+  [0.2.2] (20160718)
+   - Workaround for QGIS crash due to bug #15311. Instead of featureAdded, use
      committedFeatureAdded SIGNAL for all expressions.
-  [0.2.1] (20160717) 
-   - Fix for expressions that work when new features are saved to provider 
+  [0.2.1] (20160717)
+   - Fix for expressions that work when new features are saved to provider
      (e.g., $id).
-   - Fix for convertCompatible, as the Python API returns QVariant, not bool as 
-     C++.  
-  [0.2] (20160714) 
+   - Fix for convertCompatible, as the Python API returns QVariant, not bool as
+     C++.
+  [0.2] (20160714)
    - Ready for testing.
-  [0.1] (20160707) 
+  [0.1] (20160707)
    - First working GUI version
   [0] (20160522) It all started...
-tags=area, auto, automatic, attribute, calculation, column, coordinates, 
-  expression, feature, field, fill, geometry, layer, populate, property, 
+tags=area, auto, automatic, attribute, calculation, column, coordinates,
+  expression, feature, field, fill, geometry, layer, populate, property,
   refresh, shapefile, trigger, update, vector
 about=This plugin allows you to configure vector fields to be automatically calculated for you when digitizing new features or modifying existing ones. Think about it as triggers in a database or as an automatic Field Calculator.
 homepage=http://geotux.tuxfamily.org/index.php/en/geo-blogs/item/333-autofields-plugin-for-qgis
