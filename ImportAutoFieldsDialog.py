@@ -116,13 +116,13 @@ class ImportAutoFieldsDialog( QDialog, Ui_ImportAutoFieldsDialog ):
         if indexLayerCombo != 0 and indexFieldCombo != 0:
             if self.autoFieldManager.isFieldAnAutoField( layer, fieldName ):
                 label.setPixmap( QPixmap( ":/plugins/AutoFields/icons/orange_arrow.png" ) )
-                label.setToolTip( u'By clicking OK, this AutoField will overwrite an existing AutoField in {}/{}'.format(layer.name(),fieldName) )
+                label.setToolTip( u'This AutoField will overwrite an existing AutoField in {}/{}'.format(layer.name(),fieldName) )
             else:
                 label.setPixmap( QPixmap( ":/plugins/AutoFields/icons/green_arrow.png" ) )
                 label.setToolTip( 'AutoField correctly assigned' )
         else:
             label.setPixmap( QPixmap( ":/plugins/AutoFields/icons/gray_arrow.png" ) )
-            label.setToolTip( 'This AutoField will not be set on any layer/field' )
+            label.setToolTip( 'This AutoField will not be assigned to any layer/field' )
         label.setAlignment( Qt.AlignCenter )
         return label
 

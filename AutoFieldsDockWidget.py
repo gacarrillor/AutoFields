@@ -29,7 +29,7 @@ from PyQt4.QtGui import ( QApplication, QIcon, QDockWidget, QTableWidgetItem,
 import resources_rc
 from Ui_AutoFields_dock import Ui_AutoFieldsDockWidget
 from ExpressionBuilderDialog import ExpressionBuilderDialog
-from SetAutoFieldOnLayerDialog import SetAutoFieldOnLayerDialog
+from AssignAutoFieldToLayerDialog import AssignAutoFieldToLayerDialog
 
 
 class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
@@ -575,6 +575,14 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
 
 
     def openAutoFieldContextMenu( self, position ):
+        bLayers = False
+        layers = QgsMapLayerRegistry.instance().mapLayers().values()
+        for layer in layers:
+            if layer.type() == QgsMapLayer.VectorLayer:
+                if layer.dataProvider().capabilities() & QgsVectorDataProvider.AddFeatures:
+                    bLayers = True
+                    break
+
         item = self.tblAutoFields.itemAt( position )
         if item:
             row = item.row()
@@ -586,9 +594,14 @@ class AutoFieldsDockWidget( QDockWidget, Ui_AutoFieldsDockWidget ):
             self.menu.addAction( self.action )
             action = self.menu.exec_(self.tblAutoFields.mapToGlobal(position))
             if action and action.objectName() == 'action':
+                if not bLayers:
+                    self.msg.show( QApplication.translate( "AutoFieldsDockWidgetPy",
+                        "First load some vector layers to QGIS to be able to assign disabled AutoFields." ), 'warning' )
+                    return
+
                 autoFieldId = self.tblAutoFields.item( row, 0 ).data( Qt.UserRole )
                 bCalculateOnExisting = self.chkCalculateOnExisting.isChecked()
-                dlg = SetAutoFieldOnLayerDialog( self.iface.mainWindow(), self.autoFieldManager, autoFieldId, bCalculateOnExisting )
+                dlg = AssignAutoFieldToLayerDialog( self.iface.mainWindow(), self.autoFieldManager, autoFieldId, bCalculateOnExisting )
                 dlg.show()
 
 

@@ -27,9 +27,9 @@ from PyQt4.QtCore import Qt, QSettings
 from PyQt4.QtGui import ( QApplication, QDialog, QDialogButtonBox,
                           QTableWidgetItem, QFileDialog, QMessageBox )
 
-from Ui_Set_AutoField_on_Layer import Ui_SetAutoFieldOnLayerDialog
+from Ui_Assign_AutoField_to_Layer import Ui_AssignAutoFieldToLayerDialog
 
-class SetAutoFieldOnLayerDialog( QDialog, Ui_SetAutoFieldOnLayerDialog ):
+class AssignAutoFieldToLayerDialog( QDialog, Ui_AssignAutoFieldToLayerDialog ):
 
     def __init__( self, parent, autoFieldManager, autoFieldId, bCalculateOnExisting ):
         QDialog.__init__( self, parent )

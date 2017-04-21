@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SetAutoFieldOnLayerDialog</class>
- <widget class="QDialog" name="SetAutoFieldOnLayerDialog">
+ <class>AssignAutoFieldToLayerDialog</class>
+ <widget class="QDialog" name="AssignAutoFieldToLayerDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Set AutoField on layer</string>
+   <string>Assign AutoField to layer</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -43,7 +43,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Choose a layer to set on it the AutoField you have selected:</string>
+      <string>Choose a layer to assign the AutoField you have selected to it:</string>
      </property>
     </widget>
    </item>
@@ -81,7 +81,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Note: Only editable vector layers having a field with the same name as the AutoField definition are shown. After clicking OK, the original AutoField will be removed.</string>
+      <string>Only editable vector layers having a field with the same name as the AutoField configuration are shown. After clicking OK, the original AutoField will be removed.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -95,7 +95,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>SetAutoFieldOnLayerDialog</receiver>
+   <receiver>AssignAutoFieldToLayerDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -111,7 +111,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>SetAutoFieldOnLayerDialog</receiver>
+   <receiver>AssignAutoFieldToLayerDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
