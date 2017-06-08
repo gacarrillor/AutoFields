@@ -16,3 +16,12 @@ See detailed documentation, examples, videos, FAQ, and known issues at:
 http://geotux.tuxfamily.org/index.php/en/geo-blogs/item/333-autofields-plugin-for-qgis
 
 See the changelog at https://github.com/gacarrillor/AutoFields/blob/master/changelog.txt
+
+
+
+
+## DONATIONS
+
+Special thanks for the following persons, who donated money to AutoFields, acknowledging and motivating its development and maintenance!
+
+ - Klaus König 
