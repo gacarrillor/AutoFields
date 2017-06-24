@@ -900,9 +900,9 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>0</y>
+             <y>-161</y>
              <width>282</width>
-             <height>550</height>
+             <height>603</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -1155,6 +1155,12 @@
                 </item>
                 <item>
                  <widget class="QLabel" name="label_7">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>260</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <family>Sans Serif</family>
@@ -1168,21 +1174,7 @@
                    <enum>QFrame::NoFrame</enum>
                   </property>
                   <property name="text">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Testers (volunteers):&lt;/span&gt;&lt;/p&gt;
-Thomas Baumann&lt;br/&gt;
-Hennessy Becerra&lt;br/&gt;
-Miguel Ángel Blanco&lt;br/&gt;
-Diego Cordero&lt;br/&gt;
-Erwin Galvis&lt;br/&gt;
-Romina González Musso&lt;br/&gt;
-Andrés Guarín&lt;br/&gt;
-William Guerrero&lt;br/&gt;
-Arturo Lorenzo&lt;br/&gt;
-Sandra Liliana Moreno&lt;br/&gt;
-Enrique Morón&lt;br/&gt;
-Leonardo Porto Nazareth&lt;br/&gt;
-Marcela Suárez&lt;br/&gt;
-&lt;/body&gt;&lt;/html&gt;</string>
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Donations:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Klaus König&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Testers (volunteers):&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Thomas Baumann&lt;br/&gt;Hennessy Becerra&lt;br/&gt;Miguel Ángel Blanco&lt;br/&gt;Diego Cordero&lt;br/&gt;Erwin Galvis&lt;br/&gt;Romina González Musso&lt;br/&gt;Andrés Guarín&lt;br/&gt;William Guerrero&lt;br/&gt;Arturo Lorenzo&lt;br/&gt;Sandra Liliana Moreno&lt;br/&gt;Enrique Morón&lt;br/&gt;Leonardo Porto Nazareth&lt;br/&gt;Marcela Suárez&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
