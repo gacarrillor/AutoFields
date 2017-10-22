@@ -1,4 +1,7 @@
 Changes:
+  [0.5.1] (20171021)
+   - Fix #3 (Unicode issue when exporting).
+   - New donations section in about tab.
   [0.5.0] (20170420)
    - New buttons to export and import AutoFields to/from JSON files.
    - Context menu in 'List of AutoFields' tab to assing a disabled AutoField to

@@ -5,9 +5,9 @@ AutoFields
 A QGIS plugin
 Automatic attribute updates when creating or modifying vector features
                              -------------------
-begin                : 2016-05-22 
+begin                : 2016-05-22
 copyright            : (C) 2016 by Germán Carrillo (GeoTux)
-email                : gcarrillo@linuxmail.org 
+email                : gcarrillo@linuxmail.org
  ***************************************************************************/
 
 /***************************************************************************
@@ -19,14 +19,14 @@ email                : gcarrillo@linuxmail.org
  *                                                                         *
  ***************************************************************************/
 """
-def name(): 
-  return "AutoFields" 
+def name():
+  return "AutoFields"
 
 def description():
   return "Automatic vector field updates when modifying or creating features"
 
-def version(): 
-  return "Version 0.4.0" 
+def version():
+  return "Version 0.5.1"
 
 def qgisMinimumVersion():
   return "2.12"
@@ -37,8 +37,6 @@ def icon():
 def authorName():
   return "Germán Carrillo"
 
-def classFactory( iface ): 
+def classFactory( iface ):
   from AutoFields import AutoFields
   return AutoFields( iface )
-
-
