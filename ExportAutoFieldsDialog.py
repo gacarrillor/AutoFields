@@ -119,7 +119,6 @@ class ExportAutoFieldsDialog( QDialog, Ui_ExportAutoFieldsDialog ):
 
         self.doExport()
         self.messageManager.show( QApplication.translate( "ExportAutoFields",
-            "Selected AutoFields have been exported to {}.".format( self.txtExportFile.text() ) ) )
+            u"Selected AutoFields have been exported to {}.".format( self.txtExportFile.text() ) ) )
 
         self.done( 1 )
-
