@@ -25,3 +25,4 @@ See the changelog at https://github.com/gacarrillor/AutoFields/blob/master/chang
 Special thanks for the following persons, who donated money to AutoFields, acknowledging and motivating its development and maintenance!
 
  - Klaus König 
+ - Hugues Boisvert
