@@ -1,5 +1,9 @@
 # AutoFields
 
+**⚠️ NOTE: This plugin was created for QGIS 2.x.; QGIS 3.x offers equivalent functionality out of the box. ([See how](https://github.com/gacarrillor/AutoFields/issues/5#issuecomment-386892366))**
+
+--------------
+
 QGIS plugin to configure automatic attribute updates when creating or modifying vector features.
 
 ![Automatic updates on vector fields](https://user-images.githubusercontent.com/652785/130296007-73b84e81-7e3a-4999-bdb5-47501cb17085.gif)
